@@ -14,6 +14,11 @@ const tabContents = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('.nav');
 const header = document.querySelector('.header');
 const allSections = document.querySelectorAll('.section');
+const lazyImages = document.querySelectorAll('img[data-src]');
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+const dotContainer = document.querySelector('.dots');
 
 ///////////////////////////////////////
 /// Modal window
@@ -131,3 +136,93 @@ allSections.forEach(function (section) {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 });
+
+///Lazy loading
+const loadImages = function (entries, observer) {
+  const entry = entries[0];
+  if (!entry.isIntersecting) return;
+  //заміна зображення
+  entry.target.src = entry.target.dataset.src;
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+  observer.unobserve(entry.target);
+};
+
+const lazyImagesObserver = new IntersectionObserver(loadImages, {
+  root: null,
+  threshold: 0.7,
+});
+lazyImages.forEach(image => lazyImagesObserver.observe(image));
+
+///створення слайдера
+//слайдер через стрілки
+let currentSlide = 0;
+const slideNumber = slides.length;
+
+const moveToSlide = function (slide) {
+  slides.forEach(
+    (s, index) => (s.style.transform = `translateX(${(index - slide) * 100}%)`)
+  );
+};
+
+const nextSlide = function () {
+  if (currentSlide === slideNumber - 1) {
+    currentSlide = 0;
+  } else {
+    currentSlide++;
+  }
+  moveToSlide(currentSlide);
+  activateCurrentDot(currentSlide);
+};
+
+const previousSlide = function () {
+  if (currentSlide === 0) {
+    currentSlide = slideNumber - 1;
+  } else {
+    currentSlide--;
+  }
+  moveToSlide(currentSlide);
+  activateCurrentDot(currentSlide);
+};
+
+moveToSlide(0);
+
+//слайдер через клавіатуру
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', previousSlide);
+
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'ArrowRight') nextSlide();
+  if (e.key === 'ArrowLeft') previousSlide();
+});
+
+//слайдер через створені кнопки
+///Створення кнопок для слайдера
+const creteDots = function () {
+  slides.forEach(function (_, index) {
+    dotContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide="${index}"></button>`
+    );
+  });
+};
+creteDots();
+
+const activateCurrentDot = function (slide) {
+  document
+    .querySelectorAll('.dots__dot')
+    .forEach(dot => dot.classList.remove('dots__dot--active'));
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"]`)
+    .classList.add('dots__dot--active');
+};
+
+dotContainer.addEventListener('click', function (e) {
+  if (e.target.classList.contains('dots__dot')) {
+    const slide = e.target.dataset.slide;
+    moveToSlide(slide);
+    activateCurrentDot(slide);
+  }
+});
+activateCurrentDot(0);
