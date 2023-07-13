@@ -1,7 +1,7 @@
-import { Compontnt } from 'react';
+import { Component } from 'react';
 import './employees-list-item.css';
 
-class EmployeesListItem extends Compontnt {
+class EmployeesListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
