@@ -50,6 +50,11 @@
   opacity: 0;
 }
 
+.list-group-item.like .fa-star {
+  opacity: 1;
+  transform: translateX(0px);
+}
+
 .list-group-item.increase .list-group-item-label,
 .list-group-item.increase .list-group-item-input {
   color: #e09f3e;
