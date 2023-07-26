@@ -1,10 +1,10 @@
-import AddPasword from './components/AddPasword';
+import AddPassword from './components/AddPassword';
 import './App.css';
 
 function App() {
   return (
     <div>
-      <AddPasword />
+      <AddPassword />
     </div>
   );
 }

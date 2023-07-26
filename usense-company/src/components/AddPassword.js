@@ -1,14 +1,14 @@
 import { Component } from 'react';
-import './addPasword.css';
+import './addPassword.css';
 
-class AddPasword extends Component {
+class AddPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
       text: '',
-      paswordEasy: false,
-      paswordMedium: false,
-      paswordStrong: false,
+      passwordEasy: false,
+      passwordMedium: false,
+      passwordStrong: false,
       color: '',
     };
   }
@@ -35,19 +35,19 @@ class AddPasword extends Component {
 
     if (easyVerification) {
       this.setState({
-        paswordEasy: true,
+        passwordEasy: true,
         color: 'a',
       });
     }
     if (easyVerification && mediumVerification) {
       this.setState({
-        paswordMedium: true,
+        passwordMedium: true,
         color: 'b',
       });
     }
     if (easyVerification && strongVerification) {
       this.setState({
-        paswordStrong: true,
+        passwordStrong: true,
         color: 'c',
       });
     }
@@ -59,31 +59,33 @@ class AddPasword extends Component {
 
   render() {
     return (
-      <div class="container">
+      <div className="container">
         <input
           type="text"
-          placeholder="PASWORD"
+          placeholder="PASSWORD"
           value={this.state.text}
           onChange={this.onValueChange}
         />
-        <div
-          className={
-            !this.state.paswordEasy ? 'diagram-bar' : this.changeColor()
-          }
-        ></div>
-        <div
-          className={
-            !this.state.paswordMedium ? 'diagram-bar' : this.changeColor()
-          }
-        ></div>
-        <div
-          className={
-            !this.state.paswordStrong ? 'diagram-bar' : this.changeColor()
-          }
-        ></div>
+        <div className="container-diagram">
+          <div
+            className={
+              !this.state.passwordEasy ? 'diagram-bar' : this.changeColor()
+            }
+          ></div>
+          <div
+            className={
+              !this.state.passwordMedium ? 'diagram-bar' : this.changeColor()
+            }
+          ></div>
+          <div
+            className={
+              !this.state.passwordStrong ? 'diagram-bar' : this.changeColor()
+            }
+          ></div>
+        </div>
       </div>
     );
   }
 }
 
-export default AddPasword;
+export default AddPassword;
