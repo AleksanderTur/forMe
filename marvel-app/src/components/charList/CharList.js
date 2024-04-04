@@ -1,5 +1,5 @@
 import './charList.scss';
-import abyss from '../../resources/abyss.jpg';
+import abyss from '../../resources/img/abyss.jpg';
 
 const CharList = () => {
   return (
